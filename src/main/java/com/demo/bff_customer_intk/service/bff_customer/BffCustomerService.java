@@ -20,30 +20,30 @@ public class BffCustomerService implements IBffCustomerService {
     private final ICustomerRest customerRest;
 
     @Override
-    public Mono<CustomerResponse> findByCode(String code) {
+    public Mono<CustomerResponse> findByCode(String code, String token) {
         return this.customerRest
-                .findCustomerById(code)
+                .findCustomerById(code, token)
                 .flatMap(customer -> {
                     var affiliations = customer
                             .getAffiliations()
                             .stream()
                             .map(MsAffiliationResponse::toResponse)
                             .toList();
-                    return this.findProducts(customer.toResponse(), affiliations);
+                    return this.findProducts(customer.toResponse(), affiliations, token);
                 });
     }
 
-    private Mono<CustomerResponse> findProducts(CustomerResponse customer, List<AffiliationResponse> affiliations) {
+    private Mono<CustomerResponse> findProducts(CustomerResponse customer, List<AffiliationResponse> affiliations, String token) {
         return fromIterable(affiliations)
-                .flatMap(this::findProduct)
+                .flatMap(a -> this.findProduct(a, token))
                 .collectList()
                 .doOnNext(customer::setAffiliationsByCustomer)
                 .thenReturn(customer);
     }
 
-    private Mono<AffiliationResponse> findProduct(AffiliationResponse affiliation) {
+    private Mono<AffiliationResponse> findProduct(AffiliationResponse affiliation, String token) {
         return this.productRest
-                .findProductById(affiliation.getProductId())
+                .findProductById(affiliation.getProductId(), token)
                 .doOnNext(product -> affiliation.setProductType(product.getType()))
                 .thenReturn(affiliation);
     }

@@ -1,6 +1,6 @@
 # ms-bff-customer-intk
 ## DESCRIPCION:
-**Mircoservicio que se encarga del consumo de agentes(products/customers) para entregar una respuesta enriquecida, del cliente y sus productos.**
+**API que se encarga del consumo de agentes(products/customers) para entregar una respuesta enriquecida, del cliente y sus productos.**
 ## HERRAMIENTAS:
 
 <img align="center" alt="java" height="45" width="45" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg">

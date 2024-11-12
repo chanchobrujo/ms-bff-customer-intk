@@ -5,6 +5,7 @@ import com.demo.bff_customer_intk.service.bff_customer.IBffCustomerService;
 import com.demo.bff_customer_intk.service.security.IEncryptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,9 @@ public class BffCustomerController {
     private final IBffCustomerService bffCustomerService;
 
     @GetMapping
-    public ResponseEntity<Mono<CustomerResponse>> findByCode(@RequestHeader(value = "codeEncrypt") String  header) {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Mono<CustomerResponse>> findByCode(@RequestHeader(value = "codeEncrypt") String header, @RequestHeader(value = "Authorization") String token) {
         var code = this.encryptService.decrypt(header);
-        return ok(this.bffCustomerService.findByCode(code));
+        return ok(this.bffCustomerService.findByCode(code, token));
     }
 }

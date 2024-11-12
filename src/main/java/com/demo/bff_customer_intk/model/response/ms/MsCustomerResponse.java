@@ -2,7 +2,7 @@ package com.demo.bff_customer_intk.model.response.ms;
 
 import com.demo.bff_customer_intk.model._CustomerModel;
 import com.demo.bff_customer_intk.model.response.api.CustomerResponse;
-import com.stater.intk.util.MapperUtils;
+import com.stater.intk.common.utils.MapperUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

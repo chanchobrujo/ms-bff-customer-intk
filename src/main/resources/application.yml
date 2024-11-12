@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: ms-bff-customer
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${server-oauth2}
 
 microservices:
   customer: ${ms-customer}
@@ -24,3 +29,10 @@ springdoc:
     path: /v3/api-docs
   show-actuator: true
   packages-to-scan: com.demo.bff_customer_intk.controller
+
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          oauth2: TRACE
