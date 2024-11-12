@@ -1,0 +1,26 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: ms-bff-customer
+
+microservices:
+  customer: ${ms-customer}
+  products: ${ms-products}
+
+security:
+  password: ${password}
+  salt: ${salt}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+  api-docs:
+    path: /v3/api-docs
+  show-actuator: true
+  packages-to-scan: com.demo.bff_customer_intk.controller
